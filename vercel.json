@@ -7,13 +7,6 @@
     { "src": "/api/(.*)", "dest": "/main.py" },
     { "src": "/(.*)", "dest": "/main.py" }
   ],
-  "functions": {
-    "main.py": {
-      "runtime": "python3.11",
-      "maxDuration": 10,
-      "memory": 1024
-    }
-  },
   "env": {
     "DATABASE_URL": "@DATABASE_URL",
     "SECRET_KEY": "@SECRET_KEY",
