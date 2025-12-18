@@ -1,6 +1,6 @@
 # Portfolio Backend API
 
-FastAPI backend for portfolio website and CMS.
+FastAPI backend for the portfolio site and custom CMS. This service provides the REST API used by the public `frontend` and the `admin` CMS panel. The API, models and endpoints are implemented from scratch for this project.
 
 ## Features
 
