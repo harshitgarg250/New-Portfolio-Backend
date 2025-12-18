@@ -1,21 +1,19 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "main.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/main.py" },
+    { "src": "/(.*)", "dest": "/main.py" }
+  ],
   "functions": {
     "main.py": {
       "runtime": "python3.11",
-      "maxDuration": 10
+      "maxDuration": 10,
+      "memory": 1024
     }
   },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/main.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/main.py"
-    }
-  ],
   "env": {
     "DATABASE_URL": "@DATABASE_URL",
     "SECRET_KEY": "@SECRET_KEY",
@@ -23,8 +21,5 @@
     "ACCESS_TOKEN_EXPIRE_MINUTES": "@ACCESS_TOKEN_EXPIRE_MINUTES",
     "ALLOWED_ORIGINS": "@ALLOWED_ORIGINS",
     "UPLOAD_DIR": "@UPLOAD_DIR"
-  },
-  "builds": [
-    { "src": "main.py", "use": "@vercel/python" }
-  ]
+  }
 }
