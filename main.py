@@ -7,15 +7,25 @@ import os
 from app.core.config import settings
 from app.api.v1.router import api_router
 from app.db.database import engine, Base
+import logging
+
+logger = logging.getLogger("uvicorn.error")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Startup: try to create tables but don't raise on failure
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+    except Exception as e:
+        # Log the error and continue so the serverless function doesn't fail to start
+        logger.exception("Database initialization failed during startup: %s", e)
     yield
     # Shutdown
-    await engine.dispose()
+    try:
+        await engine.dispose()
+    except Exception:
+        logger.exception("Error disposing engine during shutdown")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
